@@ -30,6 +30,28 @@ else if($oper=="divisao")
         echo "Erro, tente novamente";
     }
 } 
+else if($oper=="exponenciacao")
+{
+
+    for($total=1, $count=1 ; $count<=$valor2 ; $count++)
+    $total *= $valor1;
+
+}
+else if($oper=="raiz")
+{
+    $total = sqrt($valor1); 
+   
+}
+else if($oper=="fracao")
+{
+    $total = $valor1 * $valor2; 
+   
+}
+else if($oper=="porcentagem")
+{
+    $total = ( $valor1  * 100 ) / $valor2; 
+   
+}
 else{
     echo "Erro, tente novamente";
  }
