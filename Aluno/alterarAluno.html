@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ex 21 Inserir Aluno</title>
+    <script>
+        function mostraInfo(strUF) {
+            console.log(strUF);
+            if (strUF.length > 0) {
+                let xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    console.log("ReadyState: " + this.readyState);
+                    if (this.readyState == 4 && this.status == 200) {
+                        let obj = JSON.parse(this.responseText);
+                        let cities = document.getElementById("cidades");
+                         for (i=0;i<obj.length;i++) {
+                            //console.log("cidade: " + obj[i]);
+                            let city = new Option(obj[i], obj[i]);
+                            cities.options.add(city);
+                        }
+                    }
+                }
+                xmlHttp.open("GET", "https://localhost/3dawNoite/alterarAluno.php?estado=" + strUF, true);
+                xmlHttp.send();
+                console.log("requisição enviada");
+            }
+        }
+        function inserirAluno() {
+            let objAluno = document.getElementById("formAluno");
+            let msg = validarAluno(objAluno);
+            if (msg == "") {
+                let xmlHttp = new XMLHttpRequest();
+                xmlHttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        //let obj = JSON.parse(this.responseText);
+                        document.getElementById("resposta").innerHTML = this.responseText;  //obj.value;
+                    }
+                }
+                xmlHttp.open("GET", "https://localhost/3dawNoite/alterarAluno.php?nome=" + objAluno.nome.value +
+                            "&email=" + objAluno.email.value + "&cpf=" + objAluno.cpf.value + "&matricula=" +
+                            objAluno.matricula.value + "&uf=" + objAluno.uf.value + "&cidade=Rio", true);
+                xmlHttp.send();
+                console.log("requisição enviada");
+            }
+            document.getElementById("resposta").innerHTML = msg;
+        }
+        function validarAluno(fAluno) {
+            let objValidForm = document.getElementById("formAluno");
+            let nome = objValidForm.nome.value;
+            let cpf = objValidForm.cpf.value;
+            let email = objValidForm.email.value;
+            let uf = objValidForm.uf.value;
+            let rg = "^(\S+)@(\S+)\.(\S+)$";
+            let msg2 = "";
+            if (nome ===""){
+                msg2 = "Preencha o nome que deseja alterar. <br>";
+                alert(msg2);
+            }
+            if (nome ===""){
+                msg2 = "Preencha o nome qu deseja incluir na alteração. <br>";
+                alert(msg2);
+            }
+            
+            return msg2;
+        }
+        
+    </script>
+</head>
+<body>
+<h3>Leitura DB</h3>
+<form action="" method="post" name="Aluno" id="formAluno">
+    Nome a ser alterado: <input type="text" name="nome"> <br><br>
+    Nome sustituir: <input type="text" name="nome"> <br><br>
+    <input type="button" name="op" value="Alterar Aluno" onclick="inserirAluno()">
+</form>
+<p id="resposta"></p>
+</body>
+</html>
