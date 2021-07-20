@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="utf-8">
+		<title>Listar</title>
+		<style>
+			</style>
+			<link rel="stylesheet" href="css/body.css">;
+		<script>
+			function mostrainfo()
+			{
+					let xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function()
+					{
+						if(this.readyState == 4 && this.status == 200)
+						{
+							console.log("retorno: " +  this.responseText);
+							document.getElementById("listar").value = this.responseText;
+							document.getElementById("listar").innerHTML = this.responseText;
+						}
+						console.log("ReadyState: " + this.readyState);
+					}
+					xmlhttp.open("GET", "http://localhost/prova/listar.php", true);
+					xmlhttp.send();
+					console.log("Mostrainfo1 ok");
+			}
+		</script>
+	</head>
+	
+	<body onload="mostrainfo()">
+		<h3 id="titulo">Listar Produto</h3>
+		<br><span id="listar"></span>
+		</table>
+	</body>
+	<footer><a href="listar.html" class="btn">Listar Todos Produtos</a></span>
+		<a href="incluir.html" class="btn">Incluir Produto</a></span>
+		<a href="update.html" class="btn">Alterar Produto</a></span>
+		<a href="deletar.html" class="btn">Excluir Produto</a></span></footer>
+
+<html>

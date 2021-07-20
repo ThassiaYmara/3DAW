@@ -1,0 +1,40 @@
+
+#titulo
+{
+position: absolute;
+font-size: 50px;
+padding-left: 400px;
+}
+
+body{
+    font-family: 'Encode Sans SC', sans-serif;
+    background-color: rgba(255,0,0,0.5);
+    text-align: center;
+    border: solid;
+ display: inline-block;
+ padding: 180px;
+  max-width: 125px;
+  margin: 5px;
+    
+}
+.btn {
+	box-shadow:inset 0px 39px 0px -24px #e67a73;
+	background-color:#e4685d;
+	border-radius:4px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:6px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #b23e35;
+}
+.btn:hover {
+	background-color:#eb675e;
+}
+.btn:active {
+	position:relative;
+	top:1px;
+}

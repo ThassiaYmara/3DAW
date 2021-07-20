@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="UTF-8">
+	<title>Incluir</title>
+	<style>
+		
+		</style>
+		<link rel="stylesheet" href="css/body.css">
+	<script>
+			var controls = {
+						upload: function( file ) {
+							var xhr = new XMLHttpRequest();
+							var fd = new FormData();
+							var nome = document.getElementById("nome").value;
+							var id = document.getElementById("id").value;
+							var fabricante = document.getElementById("fabricante").value;
+							var categoria = document.getElementById("categoria").value;
+							var tipo = document.getElementById("tipo").value;
+							var preco = document.getElementById("preco").value;
+							var quant = document.getElementById("qnt").value;
+							var descricao = document.getElementById("descricao").value;
+							var peso = document.getElementById("peso").value;
+							var data = document.getElementById("data").value;
+							var cod = document.getElementById("codigo").value;
+							
+							
+							fd.append( "files", file );
+							fd.append( "nome", nome );
+							fd.append( "id", id );
+							fd.append( "fabricante", fabricante );
+							fd.append( "tipo", tipo );
+							fd.append( "categoria",categoria );
+							fd.append( "preco", preco );
+							fd.append( "peso", peso );
+							fd.append( "data", data );
+							fd.append( "codigo", cod );
+							fd.append( "quant", quant );
+							fd.append( "descricao", descricao );
+						
+							xhr.open( 'POST', 'include.php');
+							
+							
+							xhr.upload.addEventListener( "load", function () { 
+								console.log('upload complete!'); 
+							}, false );
+							
+							
+							
+							
+							xhr.send( fd );
+
+							
+							xhr.onreadystatechange = function () {
+								if ( this.readyState == 4 ) {
+									console.log ( "Status: " + this.status );
+									console.log ( "readyState: " + this.readyState );
+									console.log ( "responseText: (" + this.responseText + " )");
+								}
+							};
+
+						
+						},
+						
+						init: function () {
+							var form = document.getElementById ( "cadastro" ); //cadastro
+							var buttonEnviar = document.getElementById( "send" );
+
+						
+						form.addEventListener ( "submit", function(evt){							
+							evt.preventDefault();
+						}, false );
+
+							buttonEnviar.addEventListener ( "click", controls.handleFiles, false );
+						},
+						
+							handleFiles: function() {
+							var inputFile = document.getElementById("img");
+							
+							controls.upload ( inputFile.files[0] );
+						}
+						
+					};
+				window.addEventListener ( "load", controls.init, false );
+				
+			function info()
+			{
+					let xmlhttp = new XMLHttpRequest(); 
+					xmlhttp.onreadystatechange = function()
+					{
+						if(this.readyState == 4 && this.status == 200)
+						{
+							console.log("Retorno: " + this.responseText);
+							let obj = JSON.parse(this.responseText);
+							let cat = document.getElementById("categoria");
+							for(i=0; i < obj.length; i++)
+							{
+								let categ = new Option(obj[i],obj[i]);
+								cat.options.add(categ);
+							}
+						}
+					}
+					xmlhttp.open("GET", "http://localhost/prova/categoria.php", true);
+					xmlhttp.send();
+					console.log("info good. good.");
+			}
+			
+		function infoshow(str)
+			{
+				console.log(str);
+				console.log("str: " + str);
+				if (str.length > 0)
+				{
+					let xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function()
+					{
+						if(this.readyState == 4 && this.status == 200)
+						{
+							console.log("Retorno: " + this.responseText);
+							let obj = JSON.parse(this.responseText);
+							document.getElementById("tipo").value = this.responseText;
+							let cat = document.getElementById("tipo");
+							for(i=0; i < obj.length; i++)
+							{
+								let cgt = new Option(obj[i],obj[i]);
+								cat.options.add(cgt);
+							}
+						}
+					}
+					xmlhttp.open("GET", "http://localhost/prova/tipo.php?categoria="+ str, true);
+					xmlhttp.send();s
+					console.log("Requisicao enviada");
+				}
+			}
+			  function gerar()
+			  {
+				document.getElementById('codigo').innerText = Math.floor(100000000* Math.random() + 10000000);
+			  }
+			  function previewFile() {
+			  var preview = document.querySelector('img');
+			  var file    = document.querySelector('input[type=file]').files[0];
+			  var reader  = new FileReader();
+
+			  reader.onloadend = function () {
+				preview.src = reader.result;
+			  }
+
+			  if (file) {
+				reader.readAsDataURL(file);
+			  } else {
+				preview.src = "";
+			  }
+			}
+			function validatorName(pNome)
+			{
+				if(pNome == ""){
+					return false;
+				}
+				return true;
+			}
+			function IDVal(pId)
+			{
+				if(pId == ""){
+					return false;
+				}
+				return true;
+			}
+			function marcaValidadora(pFabricante)
+			{
+				if(pFabricante == ""){
+					return false;
+				}
+				return true;
+			}
+			function DateVal(pData)
+			{
+				var date = new Date(pData.split('/').reverse().join('/'));
+				var novaData = new Date();
+				if(date > novaData){
+					return false;
+				}
+				return true;
+			}
+			function priceval(pPreco){
+				if(pPreco == ""){
+					return false;
+				}
+				return true;
+			}
+			function weightval(pPeso){
+				if(pPeso == ""){
+					return false;
+				}
+				return true;
+			}
+			function quantityV(pQunt){
+				if(pQunt == ""){
+					return false;
+				}
+				return true;
+			}
+			function codeValidator(pCod){
+				if(pCod == ""){
+					return false;
+				}
+				return true;
+			}
+			function DescrptV(pDescr){
+				if(pDescr == ""){
+					return false;
+				}
+				return true;
+			}
+			function Imagem(pImg){
+				if(pImg.fileSize == 0 )
+				{
+					return false;
+				}
+				return true;
+			}
+			function Form()
+			{
+				let obj2Form = document.getElementById("cadastro");
+				
+				
+				let id = document.getElementById("id").value;
+				let nome = document.getElementById("nome").value;
+				let fabricante = document.getElementById("fabricante").value;
+				let categoria = document.getElementById("categoria").value;
+				let tipo = document.getElementById("tipo").value;
+				let preco = document.getElementById("preco").value;
+				let quant = document.getElementById("qnt").value;
+				let descricao = document.getElementById("descricao").value;
+				let peso = document.getElementById("peso").value;
+				let data = document.getElementById("data").value;
+				let cod = document.getElementById("codigo").value;
+				let img = document.getElementById("img").files[0].name;
+				
+				let erro = 0;
+				
+				if(!validatorName(nome)){
+					document.getElementById("msg").innerText = "Nome inexistente. Favor inserir um Nome de um produto válido";
+					erro = 1;
+				}
+				if(!IDVal(id)){
+					document.getElementById("msg").innerText = "ID inexistente. Favor inserir um ID válido";
+					erro = 1;
+				}
+				if(!marcaValidadora(fabricante)){
+					document.getElementById("msg").innerText = "Fabricante inexistente. Favor inserir um Fabricante válido";
+					erro = 1;
+				}
+				if(!DateVal(data)){
+					document.getElementById("msg").innerText = "Data inválida";
+					erro = 1;
+				}
+				if(!priceval(preco)){
+					document.getElementById("msg").innerText = "Preço inexistente";
+					erro = 1;
+				}
+				if(!quantityV(quant)){
+					document.getElementById("msg").innerText = "Quantidade inválida";
+					erro = 1;
+				}
+				if(!codeValidator(cod)){
+					document.getElementById("msg").innerText = "Codigos de barra inválido";
+					erro = 1;
+				}
+				if(!weightval(peso)){
+					document.getElementById("msg").innerText = "Peso inválido. Favor inserir um peso válido";
+					erro = 1;
+				}
+				if(!DescrptV(descricao)){
+					document.getElementById("msg").innerText = "Descricao inválida";
+					erro = 1;
+				}
+				if(!imgvalidator(img)){
+					document.getElementById("msg").innerText = "Ocorreu um erro na insersão da imagem. Favor tente novamente";
+					erro = 1;
+				}
+				
+				if(erro==1)
+				{
+					document.getElementById("msgErro").innerText = "Dados inválidos, favor inserir os dados corretamente";
+				}
+			}
+	</script>
+	</head>
+	<body onload = "info()"><br>
+
+		<h3 id="titulo">Cadastro de Produto</h3>
+
+	<div class="bd">
+	<form action="" id="cadastro" enctype="multipart/form-data">
+	  Nome do produto: <input type="text" id="nome" placeholder="Nome do produto">
+	  <br><br>
+	  id do produto: <input type="text" id="id" placeholder="ID do produto">
+	  <br><br>
+	  Fabricante: <input type="text" id="fabricante">
+	  <br><br>
+	  Categoria: <select id="categoria" onchange="showinfo(this.value)"><option value="">Categoria do produto</option></select>
+	  <br><br>
+	  Tipo do produto: <select id="tipo"><option value="">Tipo do Produto</option></select>
+	  <br><br>
+	  Data de Inclusão: <input type="date" id="data"/>
+	  <br><br>
+	  Preço do produto: <input type="text" id="preco">
+	  <br><br>
+	  Quantidade do produto: <input type="number" id="qnt">
+	  <br><br>
+	  Peso em Gramas: <input type="text" id="peso">
+	  <br><br>
+	  Descrição do produto: <input type="text" id="descricao">
+	  <br><br>
+	 
+	  Código de barras:<input type="text" id="codigo"><br>
+	  <br><br>
+	  <input type="button" id="send" value="Criar Produto" onclick="ValidaForm()">
+	  <br><br>
+	  <p id="msgErro"></p>
+	  <br><p id="msg"></p>
+	</form></div><br>
+
+	</body>
+	<footer><a href="listar.html" class="btn">Listar Todos Produtos</a></span>
+		<a href="incluir.html" class="btn">Incluir Produto</a></span>
+		<a href="update.html" class="btn">Alterar Produto</a></span>
+		<a href="deletar.html" class="btn">Excluir Produto</a></span></footer>
+
+</html>
